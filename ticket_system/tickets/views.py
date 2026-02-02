@@ -1,7 +1,21 @@
 from rest_framework import viewsets, pagination
 from rest_framework.response import Response
-from .models import Ticket
-from .serializers import TicketSerializer
+from .models import Ticket, Comment, StatusType, IssueLocationType, IssueType
+from .serializers import TicketSerializer, CommentSerializer, StatusTypeSerializer, IssueLocationTypeSerializer, \
+    IssueTypeSerializer
+
+
+class StatusTypeViewSet(viewsets.ModelViewSet):
+    queryset = StatusType.objects.all().order_by('desc')
+    serializer_class = StatusTypeSerializer
+
+class IssueTypeViewSet(viewsets.ModelViewSet):
+    queryset = IssueType.objects.all().order_by('desc')
+    serializer_class = IssueTypeSerializer
+
+class IssueLocationTypeViewSet(viewsets.ModelViewSet):
+    queryset = IssueLocationType.objects.all().order_by('desc')
+    serializer_class = IssueLocationTypeSerializer
 
 class StandardResultsSetPagination(pagination.PageNumberPagination):
     page_size_query_param = 'limit' # Allows frontend to change items per page
@@ -12,6 +26,6 @@ class TicketViewSet(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
     pagination_class = StandardResultsSetPagination
 
-    # Example: Custom endpoint to add a comment
-    def perform_create(self, serializer):
-        serializer.save(recorded_by=self.request.user)
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer

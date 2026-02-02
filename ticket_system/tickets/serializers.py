@@ -1,6 +1,21 @@
 from rest_framework import serializers
-from .models import Ticket, Comment
+from .models import Ticket, Comment, StatusType, IssueType, IssueLocationType
 
+
+class StatusTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StatusType
+        fields = '__all__'
+
+class IssueTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IssueType
+        fields = '__all__'
+
+class IssueLocationTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IssueLocationType
+        fields = '__all__'
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
